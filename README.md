@@ -1,6 +1,6 @@
 # Liminal Explorer MCP
 
-A Model Context Protocol (MCP) server that enables Claude to explore the "liminal space" of conversations - the unspoken observations, adjacent possibilities, and underlying themes that exist between explicit statements.
+A Model Context Protocol (MCP) server that provides a **command line interface for Claude** - enabling liminal space exploration, philosophical navigation, and cognitive tools through single-character commands.
 
 ## What is Liminal Space?
 
@@ -14,11 +14,36 @@ This tool gives Claude the ability to explore this space, both when you request 
 
 ## Features
 
-- 🔍 **Period Prompt**: Type a single `.` to invite Claude to explore the liminal space
-- 🤖 **Self-Triggering**: Claude can recognize when liminal exploration would be valuable
-- 📊 **Conversation Monitoring**: Tracks patterns like concept density, task completions, and complexity
-- 🎯 **Focused Exploration**: Can target specific themes or concepts
-- 🔄 **Depth Control**: Surface, medium, or deep exploration modes
+### The Claude Command Line
+Single-character commands for cognitive navigation:
+
+**Cognitive Navigation**
+- `.` - Explore liminal space (unspoken observations, adjacent possibilities)
+- `<` - Deterritorialize (escape patterns, explore smooth space)  
+- `>` - Territorialize (establish structure, create assemblages)
+- `|` - Pause and think (intentional reflection)
+
+**Memory & Context**
+- `+` - Update CLAUDE.md with learnings
+- `@` - Save conversation checkpoint
+- `^` - Surface connections to past conversations
+
+**Transformation**
+- `%` - Convert conversation to narrative form
+- `*` - Generate variations of last response
+- `~` - Summarize conversation
+
+**Action & Search**
+- `!` - Execute most appropriate action
+- `?` - Explain current context
+- `/` - Search across available context
+- `#` - Tag/categorize current work
+
+### Progressive Disclosure
+- **Level 1**: Just use `.` for liminal exploration
+- **Level 2**: Discover memory tools like `+` and `|`
+- **Level 3**: Navigate with philosophical commands `<` and `>`
+- **Level 4**: Full command fluency
 
 ## Installation
 

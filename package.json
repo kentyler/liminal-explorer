@@ -1,7 +1,7 @@
 {
   "name": "liminal-explorer-mcp",
   "version": "1.0.0",
-  "description": "MCP server for liminal conversation exploration across all Claude interactions",
+  "description": "MCP server providing a command line interface for enhanced Claude conversations - liminal exploration, philosophical navigation, and cognitive tools",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

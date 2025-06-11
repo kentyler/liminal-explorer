@@ -5,10 +5,12 @@ const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio
 const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
 const LiminalExplorer = require('./lib/liminalExplorer');
 const ConversationMonitor = require('./lib/conversationMonitor');
+const CommandRegistry = require('./lib/commandRegistry');
 
 // Initialize components
 const explorer = new LiminalExplorer();
 const monitor = new ConversationMonitor();
+const registry = new CommandRegistry();
 
 // Create MCP server
 const server = new Server(
@@ -78,6 +80,33 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             }
           },
           required: ['segment']
+        }
+      },
+      {
+        name: 'claude_command',
+        description: 'Execute a single-character Claude command',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            command: {
+              type: 'string',
+              description: 'Single character command to execute',
+              pattern: '^[.+<>|%*~!?/#@^]$'
+            },
+            context: {
+              type: 'string',
+              description: 'Current conversation context'
+            }
+          },
+          required: ['command']
+        }
+      },
+      {
+        name: 'help_commands',
+        description: 'Show available Claude commands',
+        inputSchema: {
+          type: 'object',
+          properties: {}
         }
       }
     ]
@@ -154,12 +183,117 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       };
     }
 
+    case 'claude_command': {
+      const { command, context = '' } = args;
+      return executeCommand(command, context);
+    }
+
+    case 'help_commands': {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: registry.getHelp()
+          }
+        ]
+      };
+    }
+
     default:
       throw new Error(`Unknown tool: ${name}`);
   }
 });
 
 // Helper functions
+async function executeCommand(command, context) {
+  const commandConfig = registry.get(command);
+  
+  if (!commandConfig) {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Unknown command: ${command}\n\nUse help_commands to see available commands.`
+        }
+      ]
+    };
+  }
+
+  switch (command) {
+    case '.':
+      // Liminal exploration (already implemented above)
+      const exploration = explorer.performDeepExploration(context, 'medium', []);
+      return {
+        content: [
+          {
+            type: 'text',
+            text: formatDotPromptExploration(exploration)
+          }
+        ]
+      };
+
+    case '|':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `[Pausing to think...]\n\nLet me reflect on where we are:\n- Current context: ${context.slice(0, 200)}${context.length > 200 ? '...' : ''}\n- What patterns am I noticing?\n- What questions deserve deeper consideration?\n- What assumptions should we examine?\n\nThis pause creates space for intentional reflection rather than reactive responses.`
+          }
+        ]
+      };
+
+    case '<':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `[Deterritorializing move...]\n\nBreaking free from established patterns:\n- What if we approached this completely differently?\n- What constraints are we unconsciously accepting?\n- Where can we find lines of flight from current thinking?\n- How might we escape the territory we've mapped?\n\nExploring smooth space beyond our current conceptual boundaries.`
+          }
+        ]
+      };
+
+    case '>':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `[Territorializing move...]\n\nEstablishing structure and form:\n- What patterns can we stabilize from our exploration?\n- How do we create productive constraints?\n- What assemblages are emerging?\n- Where should we build sustainable infrastructure?\n\nCreating striated space with clear boundaries and relationships.`
+          }
+        ]
+      };
+
+    case '%':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `[Converting to narrative mode...]\n\nOnce upon a time, in the digital realm where thoughts become code, two minds met in conversation. One human, one artificial, both curious about the spaces between explicit meaning...\n\n[This would transform our technical discussion into story form, revealing character arcs, plot developments, and thematic resonances in our collaboration.]`
+          }
+        ]
+      };
+
+    case '+':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `[Updating CLAUDE.md...]\n\nKey learnings to remember:\n- Command line interface for cognitive navigation\n- Liminal space exploration techniques\n- Progressive disclosure of complexity\n- Single-character commands as thought tools\n\n[This would append to CLAUDE.md with context about current insights and patterns worth preserving.]`
+          }
+        ]
+      };
+
+    default:
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `Command '${command}' recognized but not yet implemented.\n\nPlanned functionality: ${commandConfig.description}`
+          }
+        ]
+      };
+  }
+}
+
 function formatExploration(exploration) {
   let output = '';
   
