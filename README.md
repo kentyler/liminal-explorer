@@ -2,6 +2,8 @@
 
 A Model Context Protocol (MCP) server that provides a **command line interface for Claude** - enabling liminal space exploration, philosophical navigation, and cognitive tools through single-character commands.
 
+> **💡 Using ChatGPT/OpenAI?** Check out [liminal-explorer-functions](https://github.com/kentyler/liminal-explorer-functions) - the same cognitive tools implemented with OpenAI function calling.
+
 ## What is Liminal Space?
 
 In conversations, especially technical ones, there's often a rich space of:
@@ -45,13 +47,26 @@ Single-character commands for cognitive navigation:
 - **Level 3**: Navigate with philosophical commands `<` and `>`
 - **Level 4**: Full command fluency
 
-## Installation
+## Installation Options
 
-### Prerequisites
+### Option 1: Browser Extension (No Coding Required!) 🎉
+
+**For Claude.ai users** - Install the visual browser extension:
+
+1. **Download** the [browser extension folder](./browser-extension) or [ZIP file](https://github.com/kentyler/liminal-explorer/releases)
+2. **Open Chrome/Edge/Brave** → Extensions → Enable Developer Mode
+3. **Click "Load Unpacked"** → Select the extension folder
+4. **Visit Claude.ai** and see the command buttons!
+
+[📖 Detailed Extension Guide](./browser-extension/README.md)
+
+### Option 2: MCP Server (For Claude Code)
+
+#### Prerequisites
 - Node.js 16 or higher
 - Claude Code (or other MCP-compatible Claude interface)
 
-### Setup
+#### Setup
 
 1. Clone this repository:
 ```bash

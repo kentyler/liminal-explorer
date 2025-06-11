@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin: 0;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .logo {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    
+    .subtitle {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    
+    .status {
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      border-left: 4px solid #48bb78;
+      backdrop-filter: blur(10px);
+    }
+    
+    .status.inactive {
+      border-left-color: #f56565;
+    }
+    
+    .status-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .quick-commands {
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      opacity: 0.95;
+    }
+    
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .command-item {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(10px);
+    }
+    
+    .command-item:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .command-char {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+    }
+    
+    .command-name {
+      font-size: 10px;
+      opacity: 0.9;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    
+    .help-section {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .help-text {
+      font-size: 12px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+    
+    .toggle-btn {
+      width: 100%;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(10px);
+    }
+    
+    .toggle-btn:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: rgba(255,255,255,0.5);
+    }
+    
+    .toggle-btn.inactive {
+      background: rgba(245, 101, 101, 0.3);
+      border-color: rgba(245, 101, 101, 0.5);
+    }
+    
+    .toggle-btn.inactive:hover {
+      background: rgba(245, 101, 101, 0.4);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+      opacity: 1;
+    }
+    
+    .claude-branding {
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 11px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🧠</div>
+    <div class="title">Liminal Explorer</div>
+    <div class="subtitle">Cognitive navigation for Claude</div>
+  </div>
+  
+  <div class="claude-branding">
+    Enhanced conversations on Claude.ai
+  </div>
+  
+  <div class="status" id="status">
+    <div class="status-text" id="status-text">Ready to explore</div>
+  </div>
+  
+  <div class="quick-commands">
+    <div class="section-title">Quick Commands</div>
+    <div class="command-grid">
+      <div class="command-item" data-command=".">
+        <span class="command-char">.</span>
+        <span class="command-name">Explore</span>
+      </div>
+      <div class="command-item" data-command="|">
+        <span class="command-char">|</span>
+        <span class="command-name">Pause</span>
+      </div>
+      <div class="command-item" data-command="<">
+        <span class="command-char">&lt;</span>
+        <span class="command-name">Escape</span>
+      </div>
+      <div class="command-item" data-command=">">
+        <span class="command-char">&gt;</span>
+        <span class="command-name">Structure</span>
+      </div>
+      <div class="command-item" data-command="%">
+        <span class="command-char">%</span>
+        <span class="command-name">Story</span>
+      </div>
+      <div class="command-item" data-command="+">
+        <span class="command-char">+</span>
+        <span class="command-name">Memory</span>
+      </div>
+      <div class="command-item" data-command="~">
+        <span class="command-char">~</span>
+        <span class="command-name">Summary</span>
+      </div>
+      <div class="command-item" data-command="?">
+        <span class="command-char">?</span>
+        <span class="command-name">Context</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="help-section">
+    <div class="help-text">
+      <strong>How to use:</strong><br>
+      • Click command buttons or type single characters in Claude<br>
+      • Try typing "." and pressing Enter for liminal exploration<br>
+      • Commands work best after meaningful conversations
+    </div>
+  </div>
+  
+  <button class="toggle-btn" id="toggle-btn">Show Command Panel</button>
+  
+  <div class="footer">
+    <a href="https://github.com/kentyler/liminal-explorer" target="_blank">
+      View on GitHub
+    </a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
